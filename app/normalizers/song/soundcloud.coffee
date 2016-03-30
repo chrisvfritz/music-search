@@ -1,4 +1,5 @@
 module.exports = (song) ->
+  type: 'song'
   source: 'soundcloud',
   source_id: song.id
   title: song.title
