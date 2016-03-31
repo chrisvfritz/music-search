@@ -1,9 +1,7 @@
 Rx = require 'rx'
 
 module.exports = (url, normalizerType) ->
-
   sourceType = normalizerType.split('/')[-1..][0]
-
   searcher   = require "../fetchers/#{sourceType}"
   normalizer = require "../normalizers/#{normalizerType}"
 
