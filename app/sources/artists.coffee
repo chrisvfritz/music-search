@@ -2,8 +2,8 @@ Rx = require 'rx'
 
 # TODO: CHANGE TO PULL ARTISTS INSTEAD
 
-soundcloudSongs = require './songs/soundcloud'
-spotifySongs    = require './songs/spotify'
+soundcloudArtists = require './artists/soundcloud'
+spotifyArtists    = require './artists/spotify'
 
 module.exports = (query) ->
-  Rx.Observable.merge soundcloudSongs(query), spotifySongs(query)
+  Rx.Observable.merge soundcloudArtists(query), spotifyArtists(query)
