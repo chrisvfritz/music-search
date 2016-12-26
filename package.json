@@ -1,0 +1,14 @@
+{
+  "name": "daj-radio-service",
+  "version": "1.0.0",
+  "description": "Search all your favorite music services",
+  "main": "index.js",
+  "author": "dajwill",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.15.3",
+    "playmusic": "^2.2.0",
+    "restify": "^4.3.0",
+    "rx": "^4.1.0"
+  }
+}
