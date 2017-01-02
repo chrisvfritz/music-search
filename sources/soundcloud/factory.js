@@ -10,6 +10,9 @@ module.exports = (query, type) => {
     case 'artist':
       return artistStream(query)
       break
+    case 'album':
+      return
+      break
     default:
       return Rx.Observable.merge(
         songStream(query),

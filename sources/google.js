@@ -1,7 +1,11 @@
 'use strict'
-
 const PlayMusic = require('playmusic')
 const Rx = require('rx')
+const normalizers = {
+  1: require('../normalizers/google/song'),
+  2: require('../normalizers/google/artist'),
+  3: require('../normalizers/google/album')
+}
 
 const auth = require('../KEYS.json')['google']
 
@@ -33,5 +37,18 @@ module.exports = (query, type) => {
     })
   }
 
-  return Rx.Observable.fromNodeCallback(search)(query)
+  function normalize(item) {
+    if (normalizers[item.type]) return normalizers[item.type](item)
+    return
+  }
+
+  return Rx.Observable.create((observer) => {
+    search(query, (err, items) => {
+      if (err) observer.onError(err)
+      items.map((item) => {
+        observer.onNext(normalize(item))
+      })
+      observer.onCompleted()
+    })
+  })
 }

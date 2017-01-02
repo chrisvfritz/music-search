@@ -2,6 +2,7 @@
 const axios = require('axios')
 const Rx = require('rx')
 const KEYS = require('../../KEYS.json')
+const normalizer = require('../../normalizers/soundcloud')
 
 module.exports = (query) => {
   var url = `http://api.soundcloud.com/tracks/?client_id=${KEYS['SoundCloud']}&q=${query}`
@@ -19,7 +20,7 @@ module.exports = (query) => {
 
   return Rx.Observable.create((observer) => {
     searcher(url, (items) => {
-      observer.onNext(items.map(item => item))
+      observer.onNext(items.map(item => normalizer.song(item)))
       observer.onCompleted()
     })
   })
