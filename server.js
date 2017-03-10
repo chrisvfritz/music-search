@@ -1,6 +1,6 @@
 var restify = require('restify');
 var googleStream = require('./sources/google')
-var soundcloudStream = require('./sources/soundcloud/factory')
+var soundcloudStream = require('./sources/soundcloud')
 const Rx = require('rx')
 
 module.exports = {
@@ -8,9 +8,16 @@ module.exports = {
 
     var server = restify.createServer();
 
+    server.use(restify.CORS({
+
+      // Defaults to ['*'].
+      origins: ['*']
+
+    }));
+
     function initializeRoute(searchType) {
-      var data = []
       server.get(`/${searchType}/:query`, (req, res) => {
+        var data = []
         var stream = Rx.Observable.merge(
           soundcloudStream(req.params.query, searchType),
           googleStream(req.params.query, searchType)
@@ -18,7 +25,7 @@ module.exports = {
         stream.subscribe((item) => {
           data = data.concat(item)
         }, (err) => {
-          console.log()
+          console.log(err)
         }, () => {
           res.send(data)
         })
@@ -36,7 +43,7 @@ module.exports = {
       initializeRoute(type)
     })
 
-    server.listen(8080, function() {
+    server.listen(9393, function() {
       console.log('%s listening at %s', server.name, server.url);
     });
   }

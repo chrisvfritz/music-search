@@ -20,7 +20,9 @@ module.exports = (query) => {
 
   return Rx.Observable.create((observer) => {
     searcher(url, (items) => {
-      observer.onNext(items.map(item => normalizer.song(item)))
+      items.map(item => {
+        observer.onNext(normalizer.song(item))
+      })
       observer.onCompleted()
     })
   })

@@ -6,7 +6,7 @@ module.exports = (song) => {
     title: song.track.title,
     artists: [ song.track.artist ],
     album: song.track.album,
-    duration: song.track.durationMillis,
-    // artwork: song.albumArtRef[0] ? song.albumArtRef[0].url : null
+    duration: parseInt(song.track.durationMillis),
+    artwork: song.track.albumArtRef[0] ? song.track.albumArtRef[0].url : null
   }
 }
